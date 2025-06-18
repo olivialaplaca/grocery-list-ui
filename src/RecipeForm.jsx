@@ -92,8 +92,7 @@ export default function RecipeForm() {
         <>
           <form
             onSubmit={addMoreIngredients}
-            className="recipe-ingredient-form"
-          >
+            className="recipe-ingredient-form">
             <label>
               Add recipe ingredient:
               <input

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import Header from "../Header";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const Route = createRootRoute({
   component: () => {

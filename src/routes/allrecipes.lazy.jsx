@@ -36,8 +36,7 @@ function RecipesRoute() {
           {data.map((recipe) => (
             <li
               key={recipe.recipeId}
-              onClick={() => viewRecipe(recipe.recipeId)}
-            >
+              onClick={() => viewRecipe(recipe.recipeId)}>
               {recipe.name}
             </li>
           ))}

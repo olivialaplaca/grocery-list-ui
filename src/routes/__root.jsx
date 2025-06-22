@@ -11,10 +11,14 @@ export const Route = createRootRoute({
     const [userName, setUserName] = useState("Olivia");
     return (
       <>
-        <Header user={userName} />
-        <Navbar />
-        <Outlet />
-        <Footer />
+        <div className="wrapper">
+          <div>
+            <Header user={userName} />
+            <Navbar />
+          </div>
+          <Outlet />
+          <Footer />
+        </div>
         <TanStackRouterDevtools />
         <ReactQueryDevtools />
       </>

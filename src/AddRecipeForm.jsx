@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import Recipe from "./Recipe";
 import postRecipe from "./api/postRecipe";
 
-export default function RecipeForm() {
+export default function AddRecipeForm() {
   const [showRecipeForm, setShowRecipeForm] = useState(true);
   const [showIngredientForm, setShowIngredientForm] = useState(false);
   const [recipeToAdd, setRecipeToAdd] = useState({
@@ -12,14 +12,13 @@ export default function RecipeForm() {
     recipeIngredients: [],
   });
 
-  const mutation = useMutation({
+  const postMutation = useMutation({
     mutationFn: () => postRecipe(recipeToAdd),
   });
 
   function addIngredients(event) {
     event.preventDefault();
-    const formElement = event.currentTarget;
-    const formData = new FormData(formElement);
+    const formData = new FormData(event.target);
     const name = formData.get("recipeName");
     const recipeServings = formData.get("servings");
 
@@ -54,6 +53,11 @@ export default function RecipeForm() {
       };
     });
     formElement.reset();
+  }
+
+  function saveRecipe(event) {
+    event.preventDefault();
+    postMutation.mutate();
   }
 
   return (
@@ -99,8 +103,8 @@ export default function RecipeForm() {
             <button>+ Add ingredient</button>
           </form>
           <Recipe recipe={recipeToAdd} />
-          <button onClick={mutation.mutate}>Save Recipe</button>
-          {mutation.isSuccess ? <p>Recipe saved!</p> : null}
+          <button onClick={saveRecipe}>Save Recipe</button>
+          {postMutation.isSuccess ? <p>Recipe saved!</p> : null}
         </>
       ) : null}
     </>

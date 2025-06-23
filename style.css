@@ -38,6 +38,8 @@ body {
 .edit-recipe-form {
     display: flex;
     flex-direction: column;
+    border-radius: 8px;
+    background: #878652;
 }
 
 .ingredient-input-group {

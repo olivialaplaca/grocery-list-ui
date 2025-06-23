@@ -42,8 +42,7 @@ function RecipesRoute() {
   }
 
   function showEditForm() {
-    setEditForm(true);
-    //ideally, swap recipe with edit form
+    setEditForm(!editForm);
   }
 
   return (
@@ -67,8 +66,16 @@ function RecipesRoute() {
       {showRecipe ? (
         <div>
           <Recipe key={recipetoView.recipeId} recipe={recipetoView} />
-          <button onClick={showEditForm}>Edit recipe</button>
-          {editForm ? <EditRecipeForm recipe={recipetoView} /> : null}
+          <button onClick={showEditForm}>
+            {editForm ? "Close X" : "Edit recipe"}
+          </button>
+          {editForm ? (
+            <EditRecipeForm
+              recipe={recipetoView}
+              save={setEditForm}
+              setRecipetoView={setRecipetoView}
+            />
+          ) : null}
         </div>
       ) : null}
     </div>

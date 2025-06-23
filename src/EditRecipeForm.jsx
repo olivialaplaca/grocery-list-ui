@@ -39,11 +39,23 @@ export default function EditRecipeForm(props) {
     }));
   }
 
-  function addMoreIngredientsForm() {}
+  function addMoreIngredients(event) {
+    event.preventDefault();
+    mutation.mutate();
+    setUpdatedRecipe((prevRecipe) => ({
+      ...prevRecipe,
+      recipeIngredients: [
+        ...prevRecipe.recipeIngredients,
+        { ingredientId: prevRecipe.recipeIngredients.length },
+      ],
+    }));
+  }
 
   function saveRecipe(event) {
     event.preventDefault();
     mutation.mutate();
+    props.setRecipetoView(updatedRecipe);
+    props.save();
   }
 
   return (
@@ -122,7 +134,7 @@ export default function EditRecipeForm(props) {
           ))}
         </div>
         <button type="submit">Save changes</button>
-        <button onClick={addMoreIngredientsForm}>Add more ingredients</button>
+        <button onClick={addMoreIngredients}>Add more ingredients</button>
       </form>
     </div>
   );

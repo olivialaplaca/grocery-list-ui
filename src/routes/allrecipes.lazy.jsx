@@ -26,13 +26,14 @@ function RecipesRoute() {
   }
 
   function viewRecipe(recipeId) {
+    setEditForm(false);
     if (recipetoView === null) {
       setRecipetoView(() =>
         data.find((recipe) => recipe.recipeId === recipeId)
       );
       setShowRecipe(true);
     } else if (recipeId == recipetoView.recipeId) {
-      setShowRecipe(false);
+      setShowRecipe((prevShow) => !prevShow);
     } else {
       setRecipetoView(() =>
         data.find((recipe) => recipe.recipeId === recipeId)
@@ -48,8 +49,10 @@ function RecipesRoute() {
   return (
     <div className="recipe-page">
       <div>
-        <h3>Recipes</h3>
-        <button onClick={toggleAddRecipeForm}>Add recipe</button>
+        <h3>All Recipes</h3>
+        <button onClick={toggleAddRecipeForm}>
+          {showAddRecipeForm ? "Close X" : "Add recipe"}
+        </button>
         {showAddRecipeForm ? <AddRecipeForm mode="add" /> : null}
         {data ? (
           <ul className="recipe-list">
@@ -57,7 +60,7 @@ function RecipesRoute() {
               <li
                 key={recipe.recipeId}
                 onClick={() => viewRecipe(recipe.recipeId)}>
-                {recipe.recipeName}
+                <p>{recipe.recipeName}</p>
               </li>
             ))}
           </ul>

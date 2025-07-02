@@ -17,6 +17,16 @@ export default function Recipe(props) {
       ) : null}
       <h4 className="recipe-name">Recipe Name: {props.recipe.recipeName}</h4>
       <p className="recipe-servings">Servings: {props.recipe.servings}</p>
+      <div>
+        Category tags:
+        {props.recipe.mealCategories
+          ? props.recipe.mealCategories.map((category) => (
+              <p key={category} className="category-tag">
+                {category}
+              </p>
+            ))
+          : null}
+      </div>
       <h5>Ingredients:</h5>
       <ul>{recipeIngredients}</ul>
     </>

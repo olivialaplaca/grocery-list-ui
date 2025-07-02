@@ -19,7 +19,6 @@ footer {
 }
 
 body {
-    padding: 20px;
     background: #27292c;
     color: white;
     font-family: "Inter", sans-serif;
@@ -33,6 +32,30 @@ body {
     min-height: 100%;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    padding: 20px;
+}
+
+.category-tag {
+    font-size: small;
+}
+
+.meal-category-set {
+    width: 60%;
+    margin-bottom: 1em;
+}
+
+.meal-category-option {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.meal-category-option > label {
+    margin-left: 0.5em;
+}
+
+.meal-category-option > input {
+    margin: 0;
 }
 
 .edit-recipe-form {
@@ -122,14 +145,16 @@ input {
 }
 
 .recipe-page {
-    margin: 0 auto;
+    margin: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
+    padding-left: 15px;
 }
 
 .recipe-list {
     list-style: none;
+    padding-left: 0;
 }
 
 .recipe-list > li:hover {

@@ -21,7 +21,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/planner" className="text-link">
+            <Link to="/mealplanner" className="text-link">
               Meal Planner
             </Link>
           </li>

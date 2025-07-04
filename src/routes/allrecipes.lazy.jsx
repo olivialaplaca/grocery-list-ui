@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import getAllRecipes from "../api/getAllRecipes";
 import AddRecipeForm from "../AddRecipeForm";
 import Recipe from "../Recipe";
 import EditRecipeForm from "../EditRecipeForm";
+import { MealPlanContext } from "../contexts";
 
 export const Route = createLazyFileRoute("/allrecipes")({
   component: RecipesRoute,
@@ -20,6 +21,7 @@ function RecipesRoute() {
     queryFn: () => getAllRecipes(),
     staleTime: 30000,
   });
+  const [mealPlan, setMealPlan] = useContext(MealPlanContext);
 
   function toggleAddRecipeForm() {
     setShowAddRecipeForm((prevShow) => !prevShow);
@@ -46,6 +48,10 @@ function RecipesRoute() {
     setEditForm(!editForm);
   }
 
+  function addToMealPlan(recipe) {
+    setMealPlan((prevMealPlan) => [...prevMealPlan, recipe]);
+  }
+
   return (
     <div className="recipe-page">
       <div>
@@ -57,10 +63,15 @@ function RecipesRoute() {
         {data ? (
           <ul className="recipe-list">
             {data.map((recipe) => (
-              <li
-                key={recipe.recipeId}
-                onClick={() => viewRecipe(recipe.recipeId)}>
-                <p>{recipe.recipeName}</p>
+              <li className="recipe-list-item" key={recipe.recipeId}>
+                <button onClick={() => addToMealPlan(recipe)}>
+                  {mealPlan.includes(recipe)
+                    ? "Remove from meal plan"
+                    : "Add to meal plan"}
+                </button>
+                <span onClick={() => viewRecipe(recipe.recipeId)}>
+                  {recipe.recipeName}
+                </span>
               </li>
             ))}
           </ul>

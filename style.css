@@ -157,6 +157,15 @@ input {
     padding-left: 0;
 }
 
-.recipe-list > li:hover {
+.recipe-list-item {
+    display: flex;
+    align-items: center;
+}
+
+.recipe-list-item:hover {
     font-weight: bold;
+}
+
+.recipe-list-item > button {
+    margin-right: 10px;
 }

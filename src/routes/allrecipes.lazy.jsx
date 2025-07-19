@@ -59,7 +59,7 @@ function RecipesRoute() {
         <button onClick={toggleAddRecipeForm}>
           {showAddRecipeForm ? "Close X" : "Add recipe"}
         </button>
-        {showAddRecipeForm ? <AddRecipeForm mode="add" /> : null}
+        {showAddRecipeForm ? <AddRecipeForm /> : null}
         {data ? (
           <ul className="recipe-list">
             {data.map((recipe) => (

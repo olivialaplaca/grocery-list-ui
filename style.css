@@ -169,3 +169,33 @@ input {
 .recipe-list-item > button {
     margin-right: 10px;
 }
+
+.leftovers-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.meal-plan-table {
+    border-collapse: collapse;
+    border: 1px solid white;
+}
+
+.meal-plan-table td, 
+.meal-plan-table th {
+    border: 1px solid white;
+    padding: 1rem;
+}
+
+.hovered-droppable {
+    background-color: lightblue;
+    color: darkblue
+}
+
+.drag-overlay {
+    z-index: 9999;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}

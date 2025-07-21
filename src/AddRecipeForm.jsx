@@ -43,16 +43,12 @@ export default function AddRecipeForm() {
     const formData = new FormData(event.target);
     const name = formData.get("recipeName");
     const recipeServings = formData.get("servings");
-    const categoryList = recipeCategories.filter(
-      (category) => category.checked === true
-    );
 
     setRecipeToAdd((prevRecipe) => {
       return {
         ...prevRecipe,
         recipeName: name,
         servings: recipeServings,
-        mealCategories: categoryList.map((category) => category.name),
       };
     });
     setShowIngredientForm((prevShow) => !prevShow);
@@ -103,24 +99,6 @@ export default function AddRecipeForm() {
             aria-label="servings"
             name="servings"
           />
-          <fieldset className="meal-category-set">
-            <legend>Meal Categories:</legend>
-            {recipeCategories.map((category) => (
-              <div className="meal-category-option" key={category.name}>
-                <input
-                  type="checkbox"
-                  id={category.name.toLowerCase()}
-                  name={category.name.toLowerCase()}
-                  value={category.name}
-                  checked={category.checked}
-                  onChange={handleCheckbox}
-                />
-                <label htmlFor={category.name.toLowerCase()}>
-                  {category.name}
-                </label>
-              </div>
-            ))}
-          </fieldset>
           <button>Add Ingredients</button>
         </form>
       ) : null}

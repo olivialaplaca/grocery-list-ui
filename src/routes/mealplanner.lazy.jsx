@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { MealPlanContext } from "../contexts";
 import {
   DndContext,
@@ -19,7 +19,7 @@ function Draggable(props) {
   });
   return (
     <li ref={setNodeRef} {...attributes} {...listeners}>
-      {props.recipe.recipeName}
+      {props.recipe.recipeName + ", " + props.recipe.servings}
     </li>
   );
 }

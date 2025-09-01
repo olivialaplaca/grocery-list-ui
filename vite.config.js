@@ -13,6 +13,11 @@ export default defineConfig({
         target: "http://localhost:8080",
         changeOrigin: true,
       },
+      "/mealplanner": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/mealplanner/, ""),
+      },
     },
   },
   plugins: [tanstackRouter(), react()],

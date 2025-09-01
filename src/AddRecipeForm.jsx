@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import Recipe from "./Recipe";
 import postRecipe from "./api/postRecipe";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 
 export default function AddRecipeForm() {
   const [showRecipeForm, setShowRecipeForm] = useState(true);
@@ -9,34 +11,12 @@ export default function AddRecipeForm() {
   const [recipeToAdd, setRecipeToAdd] = useState({
     recipeName: "",
     servings: "",
-    mealCategories: [],
     recipeIngredients: [],
   });
-  const [recipeCategories, setRecipeCategories] = useState([
-    { name: "BREAKFAST", checked: false },
-    { name: "LUNCH", checked: false },
-    { name: "DINNER", checked: false },
-    { name: "SNACK", checked: false },
-    { name: "DESSERT", checked: false },
-    { name: "BEVERAGE", checked: false },
-  ]);
 
   const postMutation = useMutation({
     mutationFn: () => postRecipe(recipeToAdd),
   });
-
-  function handleCheckbox(event) {
-    const checkbox = event.target;
-    const checkboxVal = checkbox.value;
-
-    setRecipeCategories((prevCategories) =>
-      prevCategories.map((category) =>
-        category.name === checkboxVal
-          ? { name: checkboxVal, checked: !category.checked }
-          : category
-      )
-    );
-  }
 
   function addIngredients(event) {
     event.preventDefault();
@@ -83,7 +63,7 @@ export default function AddRecipeForm() {
   }
 
   return (
-    <>
+    <Paper>
       <h3>Add a New Recipe</h3>
       {showRecipeForm ? (
         <form onSubmit={addIngredients}>
@@ -99,11 +79,11 @@ export default function AddRecipeForm() {
             aria-label="servings"
             name="servings"
           />
-          <button>Add Ingredients</button>
+          <Button>Add Ingredients</Button>
         </form>
       ) : null}
       {showIngredientForm ? (
-        <>
+        <Paper>
           <form
             onSubmit={addMoreIngredients}
             className="recipe-ingredient-form">
@@ -122,13 +102,13 @@ export default function AddRecipeForm() {
                 name="quantity"
               />
             </label>
-            <button>+ Add ingredient</button>
+            <Button>+ Add ingredient</Button>
           </form>
           <Recipe recipe={recipeToAdd} />
-          <button onClick={saveRecipe}>Save Recipe</button>
+          <Button onClick={saveRecipe}>Save Recipe</Button>
           {postMutation.isSuccess ? <p>Recipe saved!</p> : null}
-        </>
+        </Paper>
       ) : null}
-    </>
+    </Paper>
   );
 }

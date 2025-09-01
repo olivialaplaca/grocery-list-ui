@@ -30,6 +30,12 @@ export default [
     rules: {
       "react/no-unescaped-entities": "off",
       "react/prop-types": "off",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [{ regex: "^@mui/[^/]+$" }],
+        },
+      ],
     },
   },
   prettier,

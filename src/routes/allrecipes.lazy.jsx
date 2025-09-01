@@ -6,6 +6,7 @@ import AddRecipeForm from "../AddRecipeForm";
 import Recipe from "../Recipe";
 import EditRecipeForm from "../EditRecipeForm";
 import { MealPlanContext } from "../contexts";
+import Button from "@mui/material/Button";
 
 export const Route = createLazyFileRoute("/allrecipes")({
   component: RecipesRoute,
@@ -56,19 +57,19 @@ function RecipesRoute() {
     <div className="recipe-page">
       <div>
         <h3>All Recipes</h3>
-        <button onClick={toggleAddRecipeForm}>
+        <Button variant="contained" onClick={toggleAddRecipeForm}>
           {showAddRecipeForm ? "Close X" : "Add recipe"}
-        </button>
+        </Button>
         {showAddRecipeForm ? <AddRecipeForm /> : null}
         {data ? (
           <ul className="recipe-list">
             {data.map((recipe) => (
               <li className="recipe-list-item" key={recipe.recipeId}>
-                <button onClick={() => addToMealPlan(recipe)}>
+                <Button onClick={() => addToMealPlan(recipe)}>
                   {mealPlan.includes(recipe)
                     ? "Remove from meal plan"
                     : "Add to meal plan"}
-                </button>
+                </Button>
                 <span onClick={() => viewRecipe(recipe.recipeId)}>
                   {recipe.recipeName}
                 </span>
@@ -80,9 +81,9 @@ function RecipesRoute() {
       {showRecipe ? (
         <div>
           <Recipe key={recipetoView.recipeId} recipe={recipetoView} />
-          <button onClick={showEditForm}>
+          <Button onClick={showEditForm}>
             {editForm ? "Close X" : "Edit recipe"}
-          </button>
+          </Button>
           {editForm ? (
             <EditRecipeForm
               recipe={recipetoView}

@@ -7,6 +7,9 @@ import {
   useDraggable,
   useDroppable,
 } from "@dnd-kit/core";
+import { useMutation } from "@tanstack/react-query";
+import postGroceryList from "../api/postGroceryList";
+import { Button } from "@mui/material";
 
 export const Route = createLazyFileRoute("/mealplanner")({
   component: MealPlannerRoute,
@@ -48,6 +51,15 @@ function MealPlannerRoute() {
     "saturday",
     "sunday",
   ];
+  const [groceryListRequest, setGroceryListRequest] = useState({});
+  const [groceryList, setGroceryList] = useState([]);
+
+  const postMutation = useMutation({
+    mutationFn: () => postGroceryList(groceryListRequest),
+    onSuccess: (data) => {
+      setGroceryList(data);
+    },
+  });
 
   function handleDragStart(event) {
     const currentRecipe = event.active.data.current;
@@ -76,13 +88,42 @@ function MealPlannerRoute() {
     setUseLeftovers(!useLeftovers);
   }
 
+  function handleGenerateGroceryList() {
+    var recipeIds = {};
+    for (var [key, value] of Object.entries(plannedMeals)) {
+      recipeIds = { ...recipeIds, [key]: value.recipeId };
+    }
+    setGroceryListRequest({
+      mealPlanRecipes: recipeIds,
+      numberOfPeople: 2, //TODO: update this to get value from input
+      useLeftovers: useLeftovers,
+    });
+    postMutation.mutate();
+  }
+
+  function renderGroceryList() {
+    var listItems = [];
+    for (var i in groceryList) {
+      listItems.push(
+        <li>
+          {groceryList[i].itemName +
+            ", " +
+            groceryList[i].unitOfMeasure +
+            ", " +
+            groceryList[i].quantity}
+        </li>
+      );
+    }
+    return <ul>{listItems}</ul>;
+  }
+
   return (
     <div className="meal-planner-page">
       <h2>What do you want to eat this week?</h2>
       <div className="meal-plan-settings">
         <label>
           Number of servings for each meal:
-          <input type="number" />
+          <input type="number" name="servings-per-meal" />
         </label>
         <label className="leftovers-toggle">
           Plan to use leftovers?
@@ -127,8 +168,11 @@ function MealPlannerRoute() {
               ))}
             </tbody>
           </table>
-          <button>Save meal plan</button>
-          <button>Generate grocery list</button>
+          <Button>Save meal plan</Button>
+          <Button onClick={handleGenerateGroceryList}>
+            Generate grocery list
+          </Button>
+          <div>{postMutation.isSuccess ? renderGroceryList() : null}</div>
         </div>
         <DragOverlay>
           {activeRecipe ? (
@@ -136,11 +180,6 @@ function MealPlannerRoute() {
           ) : null}
         </DragOverlay>
       </DndContext>
-      <p>How many days shall we plan for?</p>
-      <p>Do you always eat breakfast, lunch, and dinner?</p>
-      <p>What about snacks and desserts?</p>
-      <p>How many people shall we plan for?</p>
-      <p>Any dietary restrictions we need to consider?</p>
     </div>
   );
 }

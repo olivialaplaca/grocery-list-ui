@@ -28,13 +28,6 @@ body {
     margin: 0;
 }
 
-.wrapper {
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    padding: 20px;
-}
-
 .category-tag {
     font-size: small;
 }
@@ -109,10 +102,6 @@ input {
     font-style: normal;
 }
 
-.text-link {
-    color: inherit;
-    text-decoration: inherit;
-}
 
 .header > section {
     display: block;

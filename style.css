@@ -107,12 +107,6 @@ input {
     display: block;
 }
 
-.nav-list {
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-}
-
 .add-ingredient-form {
     display: flex;
     justify-content: center;
@@ -133,13 +127,6 @@ input {
     border-radius: 6px;
 }
 
-.recipe-page {
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    padding-left: 15px;
-}
 
 .recipe-list {
     list-style: none;

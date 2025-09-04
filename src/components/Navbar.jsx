@@ -1,5 +1,10 @@
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Toolbar from "@mui/material/Toolbar";
 import { Link } from "@tanstack/react-router";
 
 const drawerWidth = 240;
@@ -13,28 +18,31 @@ export default function Navbar() {
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: "border-box" },
       }}>
-      <ul className="nav-list">
-        <li>
-          <Link to="/ingredients" className="text-link">
-            Kitchen Inventory
-          </Link>
-        </li>
-        <li>
-          <Link to="/allrecipes" className="text-link">
-            Recipe Box
-          </Link>
-        </li>
-        <li>
-          <Link to="/mealplanner" className="text-link">
-            Meal Planner
-          </Link>
-        </li>
-        <li>
-          <Link to="/groceries" className="text-link">
-            Grocery List
-          </Link>
-        </li>
-      </ul>
+      <Toolbar />
+      <Box sx={{ overflow: "auto" }}>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/ingredients">
+              <ListItemText primary="Kitchen Inventory" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/allrecipes">
+              <ListItemText primary="Recipe Box" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/mealplanner">
+              <ListItemText primary="MealPlanner" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/groceries">
+              <ListItemText primary="Grocery List" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Box>
     </Drawer>
   );
 }

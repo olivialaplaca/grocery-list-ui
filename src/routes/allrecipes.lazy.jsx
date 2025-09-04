@@ -54,7 +54,7 @@ function RecipesRoute() {
   }
 
   return (
-    <div className="recipe-page">
+    <div>
       <div>
         <h3>All Recipes</h3>
         <Button variant="contained" onClick={toggleAddRecipeForm}>

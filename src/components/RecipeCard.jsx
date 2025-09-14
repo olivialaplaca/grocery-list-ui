@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { MealPlanContext } from "../contexts";
 import { useMutation } from "@tanstack/react-query";
 import putRecipe from "../api/putRecipe";
 import { styled } from "@mui/material/styles";
@@ -9,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
 import EditIcon from "@mui/icons-material/Edit";
 import CardContent from "@mui/material/CardContent";
 import Collapse from "@mui/material/Collapse";
@@ -39,6 +41,15 @@ const ExpandMore = styled((props) => {
 
 export default function Recipe(props) {
   const [expanded, setExpanded] = useState(false);
+  const [mealPlan, setMealPlan] = useContext(MealPlanContext);
+  const [isRecipeInPlan, setIsRecipeInPlan] = useState(initialRecipeState);
+
+  function initialRecipeState() {
+    if (mealPlan.includes(props.recipe)) {
+      return true;
+    }
+    return false;
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -51,18 +62,30 @@ export default function Recipe(props) {
     </li>
   ));
 
+  function addToMealPlan() {
+    if (mealPlan.includes(props.recipe)) {
+      setMealPlan((prevMealPlan) =>
+        prevMealPlan.filter((recipe) => recipe != props.recipe)
+      );
+      setIsRecipeInPlan(false);
+    } else {
+      setMealPlan((prevMealPlan) => [...prevMealPlan, props.recipe]);
+      setIsRecipeInPlan(true);
+    }
+  }
+
   return (
     <Card>
       <CardHeader
         title={props.recipe.recipeName}
         subheader={props.recipe.servings}
       />
-      <CardActions disableSpacing>
+      <CardActions>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="add to meal plan">
-          <AddIcon />
+        <IconButton aria-label="add to meal plan" onClick={addToMealPlan}>
+          {isRecipeInPlan ? <CheckIcon /> : <AddIcon />}
         </IconButton>
         <IconButton aria-label="edit recipe">
           <EditIcon />

@@ -6,23 +6,15 @@ import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MealPlanContext } from "../contexts";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import AppTheme from "../AppTheme";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#af92a0",
-    },
-  },
-});
 
 export const Route = createRootRoute({
   component: () => {
     const [userName, setUserName] = useState("Olivia");
     const mealPlanHook = useState([]);
     return (
-      <ThemeProvider theme={theme}>
+      <AppTheme>
         <MealPlanContext.Provider value={mealPlanHook}>
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
@@ -37,7 +29,7 @@ export const Route = createRootRoute({
         </MealPlanContext.Provider>
         <TanStackRouterDevtools />
         <ReactQueryDevtools />
-      </ThemeProvider>
+      </AppTheme>
     );
   },
 });

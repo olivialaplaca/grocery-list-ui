@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import Recipe from "./Recipe";
+import Recipe from "./components/RecipeCard";
 import postRecipe from "./api/postRecipe";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
 
 export default function AddRecipeForm() {
   const [showRecipeForm, setShowRecipeForm] = useState(true);
@@ -64,20 +65,20 @@ export default function AddRecipeForm() {
 
   return (
     <Paper>
-      <h3>Add a New Recipe</h3>
+      <h3>New Recipe</h3>
       {showRecipeForm ? (
         <form onSubmit={addIngredients}>
-          <input
-            type="text"
-            placeholder="e.g. Lentil Soup"
-            aria-label="recipe name"
+          <TextField
+            required
             name="recipeName"
+            label="Recipe Name"
+            defaultValue="e.g. Lentil Soup"
           />
-          <input
-            type="text"
-            placeholder="e.g. 5"
-            aria-label="servings"
+          <TextField
+            required
             name="servings"
+            label="Servings"
+            defaultValue="e.g. 4"
           />
           <Button>Add Ingredients</Button>
         </form>
@@ -104,7 +105,15 @@ export default function AddRecipeForm() {
             </label>
             <Button>+ Add ingredient</Button>
           </form>
-          <Recipe recipe={recipeToAdd} />
+          {props.recipe.recipeId ? (
+            <p className="recipe-id">Recipe Id: {props.recipe.recipeId}</p>
+          ) : null}
+          <h4 className="recipe-name">
+            Recipe Name: {props.recipe.recipeName}
+          </h4>
+          <p className="recipe-servings">Servings: {props.recipe.servings}</p>
+          <h5>Ingredients:</h5>
+          <ul>{recipeIngredients}</ul>
           <Button onClick={saveRecipe}>Save Recipe</Button>
           {postMutation.isSuccess ? <p>Recipe saved!</p> : null}
         </Paper>

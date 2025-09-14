@@ -3,10 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import getAllRecipes from "../api/getAllRecipes";
 import AddRecipeForm from "../AddRecipeForm";
-import Recipe from "../Recipe";
+import Recipe from "../components/RecipeCard";
 import EditRecipeForm from "../EditRecipeForm";
 import { MealPlanContext } from "../contexts";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 
 export const Route = createLazyFileRoute("/allrecipes")({
   component: RecipesRoute,
@@ -58,24 +59,15 @@ function RecipesRoute() {
       <div>
         <h3>All Recipes</h3>
         <Button variant="contained" onClick={toggleAddRecipeForm}>
-          {showAddRecipeForm ? "Close X" : "Add recipe"}
+          {showAddRecipeForm ? "Close X" : "new recipe"}
         </Button>
         {showAddRecipeForm ? <AddRecipeForm /> : null}
         {data ? (
-          <ul className="recipe-list">
+          <Grid container spacing={2}>
             {data.map((recipe) => (
-              <li className="recipe-list-item" key={recipe.recipeId}>
-                <Button onClick={() => addToMealPlan(recipe)}>
-                  {mealPlan.includes(recipe)
-                    ? "Remove from meal plan"
-                    : "Add to meal plan"}
-                </Button>
-                <span onClick={() => viewRecipe(recipe.recipeId)}>
-                  {recipe.recipeName}
-                </span>
-              </li>
+              <Recipe recipe={recipe} />
             ))}
-          </ul>
+          </Grid>
         ) : null}
       </div>
       {showRecipe ? (
